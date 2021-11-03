@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "769316267713",
+    "firebase_url": "https://i181652-180681-default-rtdb.firebaseio.com",
+    "project_id": "i181652-180681",
+    "storage_bucket": "i181652-180681.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769316267713:android:1bd50b866769a2457ed640",
+        "android_client_info": {
+          "package_name": "com.mahariaz.i181652_180681"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769316267713-sjp0qpm0v4lgphv9lpgt8ljgquti7hbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG-nE9tbMJ4YhDwQVYxByMKxTjAtq3WQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769316267713-sjp0qpm0v4lgphv9lpgt8ljgquti7hbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
