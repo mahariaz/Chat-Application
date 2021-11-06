@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.ktx.Firebase;
 
+// this is signup
 public class signUp extends AppCompatActivity {
     EditText email_field_signup,password_field_signup,confirm_field;
     String email_signup,password_signup,conf_pass;
