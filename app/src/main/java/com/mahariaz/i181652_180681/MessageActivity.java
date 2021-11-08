@@ -53,6 +53,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
+
             messageList.add(new messageScreenAdapter.MessageModel(myMessageAsAString, time, "", true));
             //class to store users message activity and connect it to firebase
             UsersMessageStorage usersMessageStorage=new UsersMessageStorage("to_phone",Shared.email,myMessageAsAString,time);

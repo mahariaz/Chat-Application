@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".signUp"
+    tools:context=".Login"
     android:orientation="vertical"
 
 
@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome !"
+            android:text="Welcome Back!"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="30dp">
@@ -32,63 +32,68 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create your account ..."
+            android:text="Please login to your account"
             android:textSize="15dp"
             android:textColor="@color/white"
             >
+
         </TextView>
         <EditText
             android:layout_marginTop="20dp"
-            android:id="@+id/email_s"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
             android:inputType="textEmailAddress"
-            android:textSize="15dp">
-
-        </EditText>
-        <EditText
-            android:layout_marginTop="20dp"
-            android:id="@+id/pass"
+            android:id="@+id/email_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
+            android:hint="Email address"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:textSize="15dp">
 
         </EditText>
-        <EditText
-            android:layout_marginTop="20dp"
-            android:id="@+id/con_pass"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:textSize="15dp">
+            >
 
-        </EditText>
+            <EditText
+                android:id="@+id/password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="15dp">
 
+            </EditText>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot?"
+                android:textColor="#1A2873"
+                android:layout_alignRight="@+id/password_field"
+                android:textSize="15dp">
+
+            </TextView>
+
+
+
+        </RelativeLayout>
         <Button
             android:layout_marginTop="20dp"
-            android:id="@+id/signup_button"
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="sign up">
+            android:text="Login">
 
         </Button>
-
         <TextView
             android:layout_marginTop="10dp"
-            android:id="@+id/login"
+            android:id="@+id/reg_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Register Now"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="20dp"
@@ -98,6 +103,5 @@
 
 
     </LinearLayout>
-
 
 </LinearLayout>

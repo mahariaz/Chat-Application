@@ -29,8 +29,7 @@ public class signUp extends AppCompatActivity {
     String email_signup,password_signup,conf_pass;
     Button signup_button;
     private FirebaseAuth mAuth;
-    //FirebaseDatabase rootNode;
-    //DatabaseReference reference;
+
 
 
     @Override
@@ -53,9 +52,25 @@ public class signUp extends AppCompatActivity {
                 email_signup = email_field_signup.getText().toString();
                 password_signup = password_field_signup.getText().toString();
                 conf_pass = confirm_field.getText().toString();
+                if(email_signup.isEmpty()){
+                    email_field_signup.setError("Email is required");
+                    email_field_signup.requestFocus();
+                    return;
+                }
+                if(password_signup.isEmpty()){
+                    password_field_signup.setError("password is required");
+                    password_field_signup.requestFocus();
+                    return;
+                }
+                if(conf_pass.isEmpty()){
+                    confirm_field.setError("password is required");
+                    confirm_field.requestFocus();
+                    return;
+                }
 
-                Shared.email = email_signup;
-                Shared.username =Shared.email ;
+
+
+
 
                 mAuth.createUserWithEmailAndPassword(email_signup,password_signup)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -85,9 +100,7 @@ public class signUp extends AppCompatActivity {
                         });
 
 
-            // sign-up to home
-                Intent intent=new Intent(signUp.this,Home.class);
-                startActivity(intent);
+
 
 
             }
@@ -100,17 +113,7 @@ public class signUp extends AppCompatActivity {
 
             }
         });
-        Button test=findViewById(R.id.test_button);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // firebase things
-                /*rootNode=FirebaseDatabase.getInstance();
-                reference=rootNode.getReference("Users");
-                reference.setValue("First record");*/
 
-            }
-        });
 
 
 
