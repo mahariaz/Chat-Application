@@ -7,6 +7,7 @@ import androidx.arch.core.executor.TaskExecutor;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -39,6 +40,12 @@ public class VerifyPhoneNo extends AppCompatActivity {
         phoneEntered=findViewById(R.id.otp);
         String phoneNo=getIntent().getStringExtra("phoneNo");
         sendVerificationCodeToUser(phoneNo);
+        ver_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(VerifyPhoneNo.this,"hello",Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
@@ -66,6 +73,7 @@ public class VerifyPhoneNo extends AppCompatActivity {
             String code=phoneAuthCredential.getSmsCode();
             if (code!=null){
                 verifyCode(code);
+
             }
         }
 

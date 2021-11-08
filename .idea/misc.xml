@@ -3,8 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/i181652_180681/app/src/main/res/drawable/ic_baseline_call_24.xml" value="0.20052083333333334" />
+        <entry key="..\:/i181652_180681/app/src/main/res/drawable/message_field_background.xml" value="0.18489583333333334" />
+        <entry key="..\:/i181652_180681/app/src/main/res/drawable/my_message_bg.xml" value="0.18489583333333334" />
+        <entry key="..\:/i181652_180681/app/src/main/res/drawable/new_msg_bar.xml" value="0.18489583333333334" />
+        <entry key="..\:/i181652_180681/app/src/main/res/drawable/their_message_bg.xml" value="0.18489583333333334" />
+        <entry key="..\:/i181652_180681/app/src/main/res/layout/activity_home.xml" value="0.184375" />
+        <entry key="..\:/i181652_180681/app/src/main/res/layout/activity_message.xml" value="0.16875" />
         <entry key="..\:/i181652_180681/app/src/main/res/layout/activity_sign_up.xml" value="0.13796296296296295" />
         <entry key="..\:/i181652_180681/app/src/main/res/layout/activity_verify_phone_no.xml" value="0.184375" />
+        <entry key="..\:/i181652_180681/app/src/main/res/layout/home_fragment.xml" value="0.1703125" />
+        <entry key="..\:/i181652_180681/app/src/main/res/layout/item_design.xml" value="0.16875" />
+        <entry key="..\:/i181652_180681/app/src/main/res/layout/my_message.xml" value="0.16875" />
+        <entry key="..\:/i181652_180681/app/src/main/res/layout/their_message.xml" value="0.16875" />
+        <entry key="..\:/i181652_180681/app/src/main/res/menu/home_nav_bar.xml" value="0.184375" />
       </map>
     </option>
   </component>
