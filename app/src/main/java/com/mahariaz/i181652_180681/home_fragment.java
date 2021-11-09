@@ -27,6 +27,7 @@ public class home_fragment extends Fragment {
         View view= inflater.inflate(R.layout.home_fragment, container, false);
         userList=new ArrayList<>();
         userList.add(new ModelClass(R.drawable.nu,"maha","2:45pm","how are you and I"));
+        userList.add(new ModelClass(R.drawable.nu,"abubakar2000","2:45pm","how are you and I"));
         userList.add(new ModelClass(R.drawable.nu,"ana","2:45pm","how are you and I"));
         userList.add(new ModelClass(R.drawable.nu,"ayesha","2:45pm","how are you and I"));
         userList.add(new ModelClass(R.drawable.nu,"aima","2:45pm","how are you and I"));

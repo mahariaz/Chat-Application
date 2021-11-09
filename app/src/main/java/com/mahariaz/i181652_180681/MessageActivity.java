@@ -29,7 +29,7 @@ public class MessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Current user is abubakar2000
-        Shared.username = "abubakar2000";
+        Shared.username = "maha";
 
         ArrayList<messageScreenAdapter.MessageModel> messageList = new ArrayList<>();
         setContentView(R.layout.activity_message);
@@ -49,10 +49,51 @@ public class MessageActivity extends AppCompatActivity {
         TextView UserStatusTv = findViewById(R.id.status);
         UserNameTv.setText(getIntent().getStringExtra("recipientName"));
         UserStatusTv.setText(getIntent().getStringExtra("recipientStatus"));
+//          checking messages that the other people has sent to me.
+        dataReader.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot user : snapshot.getChildren()) {
+                    System.out.println(user.getKey());
+//                    traverse each user message
+                    DatabaseReference chatReader = dataRetreival.getReference("Chats/" + user.getKey());
+                    chatReader.addListenerForSingleValueEvent(
+                            new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot messages : snapshot.getChildren()) {
+                                        UsersMessageStorage messageObject2 = messages.getValue(UsersMessageStorage.class);
+                                        if (messageObject2.to_phone.equals(Shared.username)) {
+                                            messageList.add(new messageScreenAdapter.MessageModel(messageObject2.message, messageObject2.time, "", true));
+                                        }
+
+                                    }
+                                    messageAdapterInstance = new messageScreenAdapter(messageList);
+                                    messageRecycler.setAdapter(messageAdapterInstance);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            }
+                    );
+                }
+
+                System.out.println("");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+//        Segment reads the messages of mine only. these are the messages that are sent by me only.
         dataReader.child(Shared.username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("\n\nMessage");
 //                Add the messages
                 for (DataSnapshot child : snapshot.getChildren()) {
                     UsersMessageStorage messageObject = child.getValue(UsersMessageStorage.class);
@@ -81,7 +122,7 @@ public class MessageActivity extends AppCompatActivity {
             String myMessageAsAString = myNewMessage.getText().toString();
 
 
-            messageList.add(new messageScreenAdapter.MessageModel(myMessageAsAString, time, "", true));
+            messageList.add(new messageScreenAdapter.MessageModel(myMessageAsAString, time, "", false));
             //class to store users message activity and connect it to firebase
             UsersMessageStorage usersMessageStorage = new UsersMessageStorage(UserNameTv.getText().toString(), Shared.email, myMessageAsAString, time);
             // firebase code
