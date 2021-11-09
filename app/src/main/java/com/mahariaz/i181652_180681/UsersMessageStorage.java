@@ -3,7 +3,7 @@ package com.mahariaz.i181652_180681;
 public class UsersMessageStorage {
     public UsersMessageStorage(String to_phone, String from_phone, String message, String time) {
         this.to_phone = to_phone;
-        this.from_phone = from_phone;
+        this.imageFlag = from_phone;
         this.message = message;
         this.time = time;
     }
@@ -20,12 +20,12 @@ public class UsersMessageStorage {
         this.to_phone = to_phone;
     }
 
-    public String getFrom_phone() {
-        return from_phone;
+    public String getImageFlag() {
+        return imageFlag;
     }
 
-    public void setFrom_phone(String from_phone) {
-        this.from_phone = from_phone;
+    public void setImageFlag(String imageFlag) {
+        this.imageFlag = imageFlag;
     }
 
     public String getMessage() {
@@ -44,6 +44,6 @@ public class UsersMessageStorage {
         this.time = time;
     }
 
-    String to_phone,from_phone,message,time;
+    String to_phone, imageFlag,message,time;
 
 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class MessageActivity extends AppCompatActivity {
             // firebase code
 
             reference=rootNode.getReference("Chats");
-            reference.child("abubakar2000").child("timestamp").setValue(usersMessageStorage);
+            reference.child("abubakar2000").child(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()).toString()).setValue(usersMessageStorage);
             //empty mesage filed and show message
             myNewMessage.setText("");
             messageRecycler.scrollTo(0, messageRecycler.getBottom());
