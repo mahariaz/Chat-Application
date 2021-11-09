@@ -1,28 +1,26 @@
 package com.mahariaz.i181652_180681;
 
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.text.format.Time;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.sql.Timestamp;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Timer;
 
 public class MessageActivity extends AppCompatActivity {
     messageScreenAdapter messageAdapterInstance;
@@ -32,15 +30,43 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Current user is abubakar2000
+        Shared.username = "abubakar2000";
+
+        ArrayList<messageScreenAdapter.MessageModel> messageList = new ArrayList<>();
         setContentView(R.layout.activity_message);
-        rootNode= FirebaseDatabase.getInstance();
+        rootNode = FirebaseDatabase.getInstance();
         EditText myNewMessage = findViewById(R.id.messageField);
         RecyclerView messageRecycler = findViewById(R.id.messages_recycler_view);
         ImageButton sendButton = findViewById(R.id.sendButton);
+        LinearLayoutManager linear = new LinearLayoutManager(MessageActivity.this);
+        messageAdapterInstance = new messageScreenAdapter(messageList);
+        linear.setOrientation(LinearLayoutManager.VERTICAL);
+        messageRecycler.setLayoutManager(linear);
+
+//        fetch data from fire store
+        FirebaseDatabase dataRetreival = FirebaseDatabase.getInstance();
+        DatabaseReference dataReader = dataRetreival.getReference("Chats");
+        dataReader.child(Shared.username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("\n\nMessage");
+//                Add the messages
+                for (DataSnapshot child : snapshot.getChildren()){
+                    UsersMessageStorage messageObject  = child.getValue(UsersMessageStorage.class);
+                    messageList.add(new messageScreenAdapter.MessageModel(messageObject.message,messageObject.time,"",false));
+                }
+                messageAdapterInstance = new messageScreenAdapter(messageList);
+                messageRecycler.setAdapter(messageAdapterInstance);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("Error reading from database check for internet connection...");
+            }
+        });
 
 
-        ArrayList<messageScreenAdapter.MessageModel> messageList = new ArrayList<>();
-//        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
 //        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
         TextView UserNameTv = findViewById(R.id.username);
         TextView UserStatusTv = findViewById(R.id.status);
@@ -54,15 +80,13 @@ public class MessageActivity extends AppCompatActivity {
             String myMessageAsAString = myNewMessage.getText().toString();
 
 
-
-
             messageList.add(new messageScreenAdapter.MessageModel(myMessageAsAString, time, "", true));
             //class to store users message activity and connect it to firebase
-            UsersMessageStorage usersMessageStorage=new UsersMessageStorage(UserNameTv.getText().toString(),Shared.email,myMessageAsAString,time);
+            UsersMessageStorage usersMessageStorage = new UsersMessageStorage(UserNameTv.getText().toString(), Shared.email, myMessageAsAString, time);
             // firebase code
 
-            reference=rootNode.getReference("Chats");
-            reference.child("abubakar2000").child(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()).toString()).setValue(usersMessageStorage);
+            reference = rootNode.getReference("Chats");
+            reference.child(Shared.username).child(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()).toString()).setValue(usersMessageStorage);
             //empty mesage filed and show message
             myNewMessage.setText("");
             messageRecycler.scrollTo(0, messageRecycler.getBottom());
@@ -90,11 +114,7 @@ public class MessageActivity extends AppCompatActivity {
 
         //setting up the recycler view
 
-        LinearLayoutManager linear = new LinearLayoutManager(MessageActivity.this);
-        messageAdapterInstance = new messageScreenAdapter(messageList);
-        linear.setOrientation(LinearLayoutManager.VERTICAL);
-//
+
         messageRecycler.setAdapter(messageAdapterInstance);
-        messageRecycler.setLayoutManager(linear);
     }
 }
