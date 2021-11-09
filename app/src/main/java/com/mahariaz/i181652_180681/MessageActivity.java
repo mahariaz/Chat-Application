@@ -24,20 +24,21 @@ public class MessageActivity extends AppCompatActivity {
     messageScreenAdapter messageAdapterInstance;
     FirebaseDatabase rootNode;
     DatabaseReference reference;
-
+    ArrayList<messageScreenAdapter.MessageModel> messageList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Current user is abubakar2000
-        Shared.username = "maha";
+//      This line switches the user
+        Shared.username = "abubakar2000";
 
-        ArrayList<messageScreenAdapter.MessageModel> messageList = new ArrayList<>();
+        messageList = new ArrayList<>();
         setContentView(R.layout.activity_message);
         rootNode = FirebaseDatabase.getInstance();
         EditText myNewMessage = findViewById(R.id.messageField);
         RecyclerView messageRecycler = findViewById(R.id.messages_recycler_view);
         ImageButton sendButton = findViewById(R.id.sendButton);
         LinearLayoutManager linear = new LinearLayoutManager(MessageActivity.this);
+        messageList = messageSorter(messageList);
         messageAdapterInstance = new messageScreenAdapter(messageList);
         linear.setOrientation(LinearLayoutManager.VERTICAL);
         messageRecycler.setLayoutManager(linear);
@@ -64,10 +65,11 @@ public class MessageActivity extends AppCompatActivity {
                                     for (DataSnapshot messages : snapshot.getChildren()) {
                                         UsersMessageStorage messageObject2 = messages.getValue(UsersMessageStorage.class);
                                         if (messageObject2.to_phone.equals(Shared.username)) {
-                                            messageList.add(new messageScreenAdapter.MessageModel(messageObject2.message, messageObject2.time, "", true));
+                                            messageList.add(new messageScreenAdapter.MessageModel(messageObject2.message, messageObject2.time, "", true,messageObject2.sortingParam));
                                         }
 
                                     }
+                                    messageList = messageSorter(messageList);
                                     messageAdapterInstance = new messageScreenAdapter(messageList);
                                     messageRecycler.setAdapter(messageAdapterInstance);
                                 }
@@ -98,9 +100,10 @@ public class MessageActivity extends AppCompatActivity {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     UsersMessageStorage messageObject = child.getValue(UsersMessageStorage.class);
                     if (messageObject.to_phone.equals(UserNameTv.getText().toString())) {
-                        messageList.add(new messageScreenAdapter.MessageModel(messageObject.message, messageObject.time, "", false));
+                        messageList.add(new messageScreenAdapter.MessageModel(messageObject.message, messageObject.time, "", false,messageObject.sortingParam));
                     }
                 }
+                messageList = messageSorter(messageList);
                 messageAdapterInstance = new messageScreenAdapter(messageList);
                 messageRecycler.setAdapter(messageAdapterInstance);
             }
@@ -121,18 +124,20 @@ public class MessageActivity extends AppCompatActivity {
             // get payload
             String myMessageAsAString = myNewMessage.getText().toString();
 
+            String sortingParam = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()).toString();
 
-            messageList.add(new messageScreenAdapter.MessageModel(myMessageAsAString, time, "", false));
+            messageList.add(new messageScreenAdapter.MessageModel(myMessageAsAString, time, "", false, sortingParam));
             //class to store users message activity and connect it to firebase
-            UsersMessageStorage usersMessageStorage = new UsersMessageStorage(UserNameTv.getText().toString(), Shared.email, myMessageAsAString, time);
+            UsersMessageStorage usersMessageStorage = new UsersMessageStorage(UserNameTv.getText().toString(), Shared.email, myMessageAsAString, time, sortingParam);
             // firebase code
 
             reference = rootNode.getReference("Chats");
-            reference.child(Shared.username).child(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()).toString()).setValue(usersMessageStorage);
-            //empty mesage filed and show message
+            reference.child(Shared.username).child(sortingParam).setValue(usersMessageStorage);
+            //empty message filed and show message
             myNewMessage.setText("");
             messageRecycler.scrollTo(0, messageRecycler.getBottom());
 
+            messageList = messageSorter(messageList);
             messageAdapterInstance = new messageScreenAdapter(messageList);
             messageRecycler.setAdapter(messageAdapterInstance);
 
@@ -150,13 +155,19 @@ public class MessageActivity extends AppCompatActivity {
             //startActivity(i);
         });
 
-
-
-
-
-        //setting up the recycler view
-
-
         messageRecycler.setAdapter(messageAdapterInstance);
+    }
+
+    public ArrayList<messageScreenAdapter.MessageModel> messageSorter(ArrayList<messageScreenAdapter.MessageModel> messageList){
+        for (int i = 0; i < messageList.size(); i++) {
+            for (int j = i; j < messageList.size(); j++) {
+                if (Long.parseLong(messageList.get(i).sortingParam) > Long.parseLong(messageList.get(j).sortingParam)) {
+                    messageScreenAdapter.MessageModel temp = messageList.get(i);
+                    messageList.set(i,messageList.get(j));
+                    messageList.set(j,temp);
+                }
+            }
+        }
+        return messageList;
     }
 }

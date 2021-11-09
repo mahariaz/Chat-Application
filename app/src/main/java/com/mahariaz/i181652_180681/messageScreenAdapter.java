@@ -96,12 +96,14 @@ public class messageScreenAdapter extends RecyclerView.Adapter {
         String date;
         String image;
         boolean their;
+        String sortingParam;
 
-        public MessageModel(String message, String date, String image, boolean their) {
+        public MessageModel(String message, String date, String image, boolean their,String sortingParam) {
             this.message = message;
             this.date = date;
             this.image = image;
             this.their = their;
+            this.sortingParam = sortingParam;
         }
     }
 }
