@@ -67,41 +67,21 @@ public class signUp extends AppCompatActivity {
                     confirm_field.requestFocus();
                     return;
                 }
-
-
-
-
-
                 mAuth.createUserWithEmailAndPassword(email_signup,password_signup)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-
                                 if (task.isSuccessful()){
-                                    User user=new User(email_signup,password_signup);
-                                    FirebaseDatabase.getInstance().getReference("User")
-                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    System.out.println("Reg done");
 
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()){
-                                                Toast.makeText(signUp.this,"S",Toast.LENGTH_LONG).show();
-
-                                                //
-
-                                            }
-                                        }
-                                    });
-
-
+                                    // signup screen to BIO screen
+                                    Intent intent=new Intent(signUp.this,UserBio.class);
+                                    startActivity(intent);
+                                }else{
+                                    Toast.makeText(signUp.this,"Can't Registered",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
-
-
-
 
             }
 
