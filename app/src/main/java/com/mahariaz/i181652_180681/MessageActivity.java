@@ -16,8 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,14 +45,20 @@ public class MessageActivity extends AppCompatActivity {
 //        fetch data from fire store
         FirebaseDatabase dataRetreival = FirebaseDatabase.getInstance();
         DatabaseReference dataReader = dataRetreival.getReference("Chats");
+        TextView UserNameTv = findViewById(R.id.username);
+        TextView UserStatusTv = findViewById(R.id.status);
+        UserNameTv.setText(getIntent().getStringExtra("recipientName"));
+        UserStatusTv.setText(getIntent().getStringExtra("recipientStatus"));
         dataReader.child(Shared.username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("\n\nMessage");
 //                Add the messages
-                for (DataSnapshot child : snapshot.getChildren()){
-                    UsersMessageStorage messageObject  = child.getValue(UsersMessageStorage.class);
-                    messageList.add(new messageScreenAdapter.MessageModel(messageObject.message,messageObject.time,"",false));
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    UsersMessageStorage messageObject = child.getValue(UsersMessageStorage.class);
+                    if (messageObject.to_phone.equals(UserNameTv.getText().toString())) {
+                        messageList.add(new messageScreenAdapter.MessageModel(messageObject.message, messageObject.time, "", false));
+                    }
                 }
                 messageAdapterInstance = new messageScreenAdapter(messageList);
                 messageRecycler.setAdapter(messageAdapterInstance);
@@ -68,10 +72,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 //        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
-        TextView UserNameTv = findViewById(R.id.username);
-        TextView UserStatusTv = findViewById(R.id.status);
-        UserNameTv.setText(getIntent().getStringExtra("recipientName"));
-        UserStatusTv.setText(getIntent().getStringExtra("recipientStatus"));
+
         sendButton.setOnClickListener(v -> {
             // get time
             SimpleDateFormat input = new SimpleDateFormat("HH:mm");
