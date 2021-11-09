@@ -32,14 +32,15 @@ public class MessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+        rootNode= FirebaseDatabase.getInstance();
         EditText myNewMessage = findViewById(R.id.messageField);
         RecyclerView messageRecycler = findViewById(R.id.messages_recycler_view);
         ImageButton sendButton = findViewById(R.id.sendButton);
 
 
         ArrayList<messageScreenAdapter.MessageModel> messageList = new ArrayList<>();
-        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
-        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
+//        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
+//        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
         TextView UserNameTv = findViewById(R.id.username);
         TextView UserStatusTv = findViewById(R.id.status);
         UserNameTv.setText(getIntent().getStringExtra("recipientName"));
@@ -56,11 +57,11 @@ public class MessageActivity extends AppCompatActivity {
 
             messageList.add(new messageScreenAdapter.MessageModel(myMessageAsAString, time, "", true));
             //class to store users message activity and connect it to firebase
-            UsersMessageStorage usersMessageStorage=new UsersMessageStorage("to_phone",Shared.email,myMessageAsAString,time);
+            UsersMessageStorage usersMessageStorage=new UsersMessageStorage(UserNameTv.getText().toString(),Shared.email,myMessageAsAString,time);
             // firebase code
-            rootNode= FirebaseDatabase.getInstance();
-            reference=rootNode.getReference("MessageActivity");
-            reference.child(Shared.email).setValue(usersMessageStorage);
+
+            reference=rootNode.getReference("Chats");
+            reference.child("abubakar2000").child("timestamp").setValue(usersMessageStorage);
             //empty mesage filed and show message
             myNewMessage.setText("");
             messageRecycler.scrollTo(0, messageRecycler.getBottom());
