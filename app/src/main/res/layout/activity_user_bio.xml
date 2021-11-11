@@ -37,6 +37,16 @@
             android:textColor="@color/white"
             >
         </TextView>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/dp_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/person"
+            android:background="#979494"
+            android:layout_gravity="center">
+
+        </de.hdodenhof.circleimageview.CircleImageView>
         <EditText
             android:layout_marginTop="20dp"
             android:id="@+id/fname"

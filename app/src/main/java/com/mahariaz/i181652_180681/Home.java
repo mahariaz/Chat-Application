@@ -3,56 +3,49 @@ package com.mahariaz.i181652_180681;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class Home extends AppCompatActivity {
-
-
+    TabLayout tabLayout;
+    ViewPager viewPager;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        //bottom nav
-        BottomNavigationView btnNav=findViewById(R.id.bottomNavigationView);
-        btnNav.setOnNavigationItemSelectedListener(navListner);
+        tabLayout=(TabLayout) findViewById(R.id.tabLayout);
+        viewPager=(ViewPager) findViewById(R.id.viewPager);
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.phone_icon));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.cam_icon));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.chat_icon));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.group_icon));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        final TabLayoutAdapter adapter=new TabLayoutAdapter(this,getSupportFragmentManager(),tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
 
-        //setting home fragment as main fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_layout,new home_fragment()).commit();
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new
+                TabLayout.OnTabSelectedListener() {
+            @Override
+                    public void onTabSelected(TabLayout.Tab tab){
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+                    public void onTabUnselected(TabLayout.Tab tab){
+
+            }
+            @Override
+                    public void onTabReselected(TabLayout.Tab tab){
+
+            }
+                });
     }
-    // listner nav bar
-    private BottomNavigationView.OnNavigationItemSelectedListener navListner=new
-            BottomNavigationView.OnNavigationItemSelectedListener(){
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item){
-                    Fragment selectedFragment=null;
-                    switch(item.getItemId()){
-                        case R.id.item1:
-                            selectedFragment=new call_fragment();
-                            break;
-                        case R.id.item2:
-                            selectedFragment=new cam_fragment();
-                            break;
-                        case R.id.item3:
-                            selectedFragment=new home_fragment();
-                            break;
-                        case R.id.item4:
-                            selectedFragment=new new_grp_cnt_fragment();
-                            break;
-
-                    }
-                    // begin transaction
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_layout
-                                    ,selectedFragment).commit();
-                    return true;
 
 
-                }
-            };
 
 }

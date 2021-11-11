@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mahariaz.i181652_180681">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,18 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.I181652_180681">
         <activity
-            android:name=".UserBio"
-            android:exported="false" />
+            android:name=".ImageUpload"
+            android:exported="true" >
+
+
+
+        </activity>
+
         <activity
-            android:name=".Login"
+            android:name=".UserBio"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".MessageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Home"
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +35,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MessageActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".Home"
+            android:exported="true"></activity>
+        <activity
             android:name=".VerifyPhoneNo"
             android:exported="false" />
         <activity
@@ -37,7 +48,10 @@
             android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true">
+
+
+        </activity>
     </application>
 
 </manifest>

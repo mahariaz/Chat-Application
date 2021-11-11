@@ -67,6 +67,7 @@ public class signUp extends AppCompatActivity {
                     confirm_field.requestFocus();
                     return;
                 }
+                Shared.email=email_signup;
                 mAuth.createUserWithEmailAndPassword(email_signup,password_signup)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override

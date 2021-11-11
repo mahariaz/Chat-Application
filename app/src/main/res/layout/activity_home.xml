@@ -10,15 +10,15 @@
     tools:context=".Home">
 
 
-    <FrameLayout
-        android:id="@+id/fragment_layout"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.9">
 
-    </FrameLayout>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+    </androidx.viewpager.widget.ViewPager>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="#575252"
@@ -26,7 +26,7 @@
 
         app:menu="@menu/home_nav_bar">
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </com.google.android.material.tabs.TabLayout>
 
 
 
