@@ -6,11 +6,14 @@ import android.net.Uri;
 import java.io.Serializable;
 
 public class UserBioStorage {
-    public UserBioStorage(String email, String fname, String lname, String age) {
+    public UserBioStorage(String dp,String email, String username,String fname, String lname, String age,String tagline) {
         this.fname = fname;
         this.lname = lname;
         this.age = age;
         this.email=email;
+        this.username=username;
+        this.dp=dp;
+        this.tagline=tagline;
 
     }
 
@@ -42,7 +45,39 @@ public class UserBioStorage {
         this.age = age;
     }
 
-    String fname,lname,age,email;
+    String fname;
+    String lname;
+    String age;
+    String email;
+    String tagline;
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
+    }
+
+    public String getDp() {
+        return dp;
+    }
+
+    public void setDp(String dp) {
+        this.dp = dp;
+    }
+
+    String dp;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    String username;
 
 
 

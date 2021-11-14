@@ -51,6 +51,18 @@
         </EditText>
         <EditText
             android:layout_marginTop="20dp"
+            android:id="@+id/username_s"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:inputType="text"
+            android:textSize="15dp">
+
+        </EditText>
+        <EditText
+            android:layout_marginTop="20dp"
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

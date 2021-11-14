@@ -25,8 +25,8 @@ import com.google.firebase.ktx.Firebase;
 
 // this is signup
 public class signUp extends AppCompatActivity {
-    EditText email_field_signup,password_field_signup,confirm_field;
-    String email_signup,password_signup,conf_pass;
+    EditText email_field_signup,password_field_signup,confirm_field,username_field;
+    String email_signup,password_signup,conf_pass,username_signup;
     Button signup_button;
     private FirebaseAuth mAuth;
 
@@ -49,8 +49,10 @@ public class signUp extends AppCompatActivity {
                 email_field_signup = findViewById(R.id.email_s);
                 password_field_signup = findViewById(R.id.pass);
                 confirm_field = findViewById(R.id.con_pass);
+                username_field = findViewById(R.id.username_s);
                 email_signup = email_field_signup.getText().toString();
                 password_signup = password_field_signup.getText().toString();
+                username_signup = username_field.getText().toString();
                 conf_pass = confirm_field.getText().toString();
                 if(email_signup.isEmpty()){
                     email_field_signup.setError("Email is required");
@@ -58,16 +60,22 @@ public class signUp extends AppCompatActivity {
                     return;
                 }
                 if(password_signup.isEmpty()){
-                    password_field_signup.setError("password is required");
+                    password_field_signup.setError("Password is required");
                     password_field_signup.requestFocus();
                     return;
                 }
                 if(conf_pass.isEmpty()){
-                    confirm_field.setError("password is required");
+                    confirm_field.setError("Password is required");
                     confirm_field.requestFocus();
                     return;
                 }
+                if(username_signup.isEmpty()){
+                    username_field.setError("Username is required");
+                    username_field.requestFocus();
+                    return;
+                }
                 Shared.email=email_signup;
+                Shared.username=username_signup;
                 mAuth.createUserWithEmailAndPassword(email_signup,password_signup)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override

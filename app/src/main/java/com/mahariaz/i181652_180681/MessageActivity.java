@@ -1,9 +1,24 @@
 package com.mahariaz.i181652_180681;
 
+import android.accessibilityservice.AccessibilityService;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.provider.ContactsContract;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,15 +31,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
     messageScreenAdapter messageAdapterInstance;
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     ArrayList<messageScreenAdapter.MessageModel> messageList;
+    private View main;
+    ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +177,48 @@ public class MessageActivity extends AppCompatActivity {
         });
 
         messageRecycler.setAdapter(messageAdapterInstance);
+        ///// calling screenshot function
+        ImageButton ss=findViewById(R.id.ss);
+        main=findViewById(R.id.main);
+        imageView=findViewById(R.id.imageView);
+        ss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bitmap b = Screenshot.takescreenshotOfRootView(imageView);
+                imageView.setImageBitmap(b);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageView.setImageBitmap(null);
+                    }
+                }, 2000);
+
+                //send notification
+                String title="ScreenShot";
+                String body="Your screenshot of chat is taken";
+                String subject="ScreenShot Taken!";
+
+                NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification notify=new Notification.Builder
+                        (getApplicationContext()).
+                        setContentTitle(title).
+                        setContentText(body).
+                        setContentTitle(subject).
+                        setSmallIcon(R.drawable.notif_icon).build();
+
+                notify.flags |= Notification.FLAG_AUTO_CANCEL;
+                notif.notify(0, notify);
+
+
+            }
+        });
+
+
+
     }
+
 
     public ArrayList<messageScreenAdapter.MessageModel> messageSorter(ArrayList<messageScreenAdapter.MessageModel> messageList){
         for (int i = 0; i < messageList.size(); i++) {
@@ -170,4 +232,6 @@ public class MessageActivity extends AppCompatActivity {
         }
         return messageList;
     }
+
+
 }

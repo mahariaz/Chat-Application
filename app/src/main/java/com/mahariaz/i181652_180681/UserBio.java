@@ -39,8 +39,8 @@ import java.nio.charset.StandardCharsets;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserBio extends AppCompatActivity {
-    EditText fname_field, lname_field, age_field;
-    public String fname, lname, age, dp;
+    EditText fname_field, lname_field, age_field,tag_field;
+    public String fname, lname, age, dp,tag_line;
     Button create_button;
     FirebaseDatabase rootNode;
     DatabaseReference reference;
@@ -56,6 +56,7 @@ public class UserBio extends AppCompatActivity {
         fname_field = findViewById(R.id.fname);
         lname_field = findViewById(R.id.lname);
         age_field = findViewById(R.id.age);
+        tag_field = findViewById(R.id.tag_field);
 
 
         //register user
@@ -67,6 +68,7 @@ public class UserBio extends AppCompatActivity {
                 fname = fname_field.getText().toString();
                 lname = lname_field.getText().toString();
                 age = age_field.getText().toString();
+                tag_line = tag_field.getText().toString();
                 register_bio();
                 Intent intent = new Intent(UserBio.this, Login.class);
                 startActivity(intent);
@@ -113,9 +115,13 @@ public class UserBio extends AppCompatActivity {
 
                                         FirebaseDatabase fstorage = FirebaseDatabase.getInstance();
                                         DatabaseReference DBREF = fstorage.getReference("UserBio");
-                                        DBREF.push().setValue(
+                                        /*DBREF.push().setValue(
                                                 dp
-                                        );
+                                        );*/
+                                        rootNode = FirebaseDatabase.getInstance();
+                                        reference = rootNode.getInstance().getReference("UserBio");
+                                        UserBioStorage userBioStorage = new UserBioStorage(dp,Shared.email,Shared.username, fname, lname, age,tag_line);
+                                        reference.child(Shared.username).setValue(userBioStorage);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -132,9 +138,6 @@ public class UserBio extends AppCompatActivity {
 
                     }
                 });
-        rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getInstance().getReference("UserBio");
-        UserBioStorage userBioStorage = new UserBioStorage(Shared.email, fname, lname, age);
-        reference.setValue(userBioStorage);
+
     }
 }

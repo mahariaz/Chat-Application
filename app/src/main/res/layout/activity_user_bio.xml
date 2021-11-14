@@ -29,21 +29,13 @@
             android:textSize="30dp">
 
         </TextView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create your profile ..."
-            android:textSize="15dp"
-            android:textColor="@color/white"
-            >
-        </TextView>
+
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/dp_view"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/person"
-            android:background="#979494"
+            android:src="@drawable/circle"
             android:layout_gravity="center">
 
         </de.hdodenhof.circleimageview.CircleImageView>
@@ -80,6 +72,16 @@
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:inputType="textPersonName"
+            android:textSize="15dp"/>
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/tag_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="What's on your mind!"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:inputType="text"
             android:textSize="15dp">
 
         </EditText>

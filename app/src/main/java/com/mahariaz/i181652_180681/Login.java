@@ -21,8 +21,8 @@ import com.google.firebase.ktx.Firebase;
 public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Button login;
-    EditText email_field,password_field;
-    String email_login,password_login;
+    EditText email_field,password_field,username_field;
+    String email_login,password_login,username_login;
     TextView reg_now;
     SharedPreferences sp;
     @Override
@@ -32,8 +32,9 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         email_field=findViewById(R.id.email_field);
         password_field=findViewById(R.id.password_field);
+        username_field=findViewById(R.id.username_field);
         sp = getSharedPreferences("login",MODE_PRIVATE);
-        if(sp.getBoolean("logged",false)){
+        if(sp.getBoolean("logged",false )){
             Intent intent=new Intent(Login.this,Home.class);
             startActivity(intent);
         }
@@ -43,6 +44,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 email_login = email_field.getText().toString();
                 password_login = password_field.getText().toString();
+                username_login = username_field.getText().toString();
                 System.out.println(email_login);
                 if(email_login.isEmpty()){
                     email_field.setError("Email is required");
@@ -54,7 +56,13 @@ public class Login extends AppCompatActivity {
                     password_field.requestFocus();
                     return;
                 }
+                if(username_login.isEmpty()){
+                    username_field.setError("Username is required");
+                    username_field.requestFocus();
+                    return;
+                }
                 Shared.email = email_login;
+                Shared.username=username_login;
                mAuth.signInWithEmailAndPassword(email_login,password_login)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override

@@ -23,11 +23,11 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
                 home_fragment homeFragment=new home_fragment();
                 return homeFragment;
             case 1:
-                call_fragment callFragment=new call_fragment();
-                return callFragment;
-            case 2:
                 cam_fragment camFragment=new cam_fragment();
                 return camFragment;
+            case 2:
+                call_fragment callFragment=new call_fragment();
+                return callFragment;
             case 3:
                 new_grp_cnt_fragment group_contact=new new_grp_cnt_fragment();
                 return group_contact;
