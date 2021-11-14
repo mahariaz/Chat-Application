@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/activity_home.xml" value="0.3625" />
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/activity_image_upload.xml" value="0.3625" />
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/activity_login.xml" value="0.3625" />
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/activity_message.xml" value="0.33" />
-        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/home_fragment.xml" value="0.75" />
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/activity_user_bio.xml" value="0.3625" />
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/call_fragment.xml" value="0.3625" />
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/call_log_entry.xml" value="0.3625" />
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/cam_fragment.xml" value="0.3625" />
+        <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/home_fragment.xml" value="0.33" />
         <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/my_message.xml" value="0.13055555555555556" />
         <entry key="..\:/Users/Abubakar/AndroidStudioProjects/ChatApp_Firebase/app/src/main/res/layout/their_message.xml" value="0.13055555555555556" />
         <entry key="..\:/i181652_180681/app/src/main/res/drawable/ic_baseline_call_24.xml" value="0.20052083333333334" />

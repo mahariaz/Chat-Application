@@ -19,6 +19,8 @@
     </androidx.viewpager.widget.ViewPager>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#26389F"
         android:id="@+id/logout"

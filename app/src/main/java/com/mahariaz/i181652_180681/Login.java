@@ -1,8 +1,5 @@
 package com.mahariaz.i181652_180681;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,11 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.ktx.Firebase;
 
 public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -63,7 +62,7 @@ public class Login extends AppCompatActivity {
                 }
                 Shared.email = email_login;
                 Shared.username=username_login;
-               mAuth.signInWithEmailAndPassword(email_login,password_login)
+                mAuth.signInWithEmailAndPassword(email_login, password_login)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {

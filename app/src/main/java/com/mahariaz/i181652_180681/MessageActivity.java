@@ -1,8 +1,22 @@
 package com.mahariaz.i181652_180681;
 
+import android.accessibilityservice.AccessibilityService;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.provider.ContactsContract;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,80 +25,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sinch.android.rtc.SinchClient;
-import com.sinch.android.rtc.calling.Call;
-import com.sinch.android.rtc.calling.CallListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
     messageScreenAdapter messageAdapterInstance;
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     ArrayList<messageScreenAdapter.MessageModel> messageList;
-
-    FirebaseAuth auth;
-    FirebaseUser firebaseuser;
-    SinchClient sinchClient;
-    Call call;
-    DatabaseReference dbRefForSinch;
-
+    private View main;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-//        Required by sinch
-
-
 //      This line switches the user
         Shared.username = "abubakar2000";
-
-        auth = FirebaseAuth.getInstance();
-        firebaseuser = auth.getCurrentUser();
-        dbRefForSinch = FirebaseDatabase.getInstance().getReference().child("Users");
-/*
-        findViewById(R.id.callButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sinchClient = Sinch.getSinchClientBuilder()
-                        .context(MessageActivity.this)
-                        .userId(firebaseuser.getUid())
-                        .applicationKey("")
-                        .environmentHost("")
-                        .build();
-//                starts listening for calls
-                sinchClient.startListeningOnActiveConnection();
-
-
-                sinchClient.getCallClient().addCallClientListener(new CallClientListener() {
-                    @Override
-                    public void onIncomingCall(CallClient callClient, Call call) {
-//                        executes when call is recieved
-
-
-                    }
-                });
-
-                sinchClient.start();
-
-                fetchUsers();
-            }
-
-
-
-        });
-*/
-
 
         messageList = new ArrayList<>();
         setContentView(R.layout.activity_message);
@@ -173,7 +139,6 @@ public class MessageActivity extends AppCompatActivity {
 //        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
 
         sendButton.setOnClickListener(v -> {
-
             // get time
             SimpleDateFormat input = new SimpleDateFormat("HH:mm");
             String time = input.format(new Date());
@@ -197,6 +162,8 @@ public class MessageActivity extends AppCompatActivity {
             messageAdapterInstance = new messageScreenAdapter(messageList);
             messageRecycler.setAdapter(messageAdapterInstance);
 
+            messageRecycler.scrollToPosition(messageList.size()-1);
+
 
 
 
@@ -207,14 +174,104 @@ public class MessageActivity extends AppCompatActivity {
         findViewById(R.id.backButtonMessageScreen).setOnClickListener(view -> finish());
 
         findViewById(R.id.callButton).setOnClickListener(v -> {
-//            TODO add the call screen
-//            Intent i = new Intent(MessageActivity.this, CallerActivity.class);
-//            startActivity(i);
+            //Intent i = new Intent(MessageActivity.this, CallerActivity.class);
+            //startActivity(i);
         });
 
         messageRecycler.setAdapter(messageAdapterInstance);
+        ///// calling screenshot function
+        ImageButton ss=findViewById(R.id.ss);
+        main=findViewById(R.id.main);
+        imageView=findViewById(R.id.imageView);
+        ss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bitmap b = Screenshot.takescreenshotOfRootView(imageView);
+                imageView.setImageBitmap(b);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageView.setImageBitmap(null);
+                    }
+                }, 2000);
+
+                //send notification
+                String title="ScreenShot";
+                String body="Your screenshot of chat is taken";
+                String subject="ScreenShot Taken!";
+
+                NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification notify=new Notification.Builder
+                        (getApplicationContext()).
+                        setContentTitle(title).
+                        setContentText(body).
+                        setContentTitle(subject).
+                        setSmallIcon(R.drawable.notif_icon).build();
+
+                notify.flags |= Notification.FLAG_AUTO_CANCEL;
+                notif.notify(0, notify);
+
+
+            }
+        });
+
+
+
     }
 
+
+    public ArrayList<messageScreenAdapter.MessageModel> messageSorter(ArrayList<messageScreenAdapter.MessageModel> messageList){
+        for (int i = 0; i < messageList.size(); i++) {
+            for (int j = i; j < messageList.size(); j++) {
+                if (Long.parseLong(messageList.get(i).sortingParam) > Long.parseLong(messageList.get(j).sortingParam)) {
+                    messageScreenAdapter.MessageModel temp = messageList.get(i);
+                    messageList.set(i,messageList.get(j));
+                    messageList.set(j,temp);
+                }
+            }
+        }
+        return messageList;
+    }
+
+
+}
+
+
+/*
+ findViewById(R.id.callButton).setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+sinchClient = Sinch.getSinchClientBuilder()
+.context(MessageActivity.this)
+.userId(firebaseuser.getUid())
+.applicationKey("")
+.environmentHost("")
+.build();
+//                starts listening for calls
+sinchClient.startListeningOnActiveConnection();
+
+
+sinchClient.getCallClient().addCallClientListener(new CallClientListener() {
+@Override
+public void onIncomingCall(CallClient callClient, Call call) {
+//                        executes when call is recieved
+
+
+}
+});
+
+sinchClient.start();
+
+fetchUsers();
+}
+
+
+
+});
+ */
+/*
     private void fetchUsers() {
 //        fetch users to see whom to call
         dbRefForSinch.addValueEventListener(new ValueEventListener() {
@@ -229,8 +286,6 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
-
-
     private class SinchCallListener implements CallListener {
 
         @Override
@@ -252,16 +307,4 @@ public class MessageActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList<messageScreenAdapter.MessageModel> messageSorter(ArrayList<messageScreenAdapter.MessageModel> messageList) {
-        for (int i = 0; i < messageList.size(); i++) {
-            for (int j = i; j < messageList.size(); j++) {
-                if (Long.parseLong(messageList.get(i).sortingParam) > Long.parseLong(messageList.get(j).sortingParam)) {
-                    messageScreenAdapter.MessageModel temp = messageList.get(i);
-                    messageList.set(i, messageList.get(j));
-                    messageList.set(j, temp);
-                }
-            }
-        }
-        return messageList;
-    }
-}
+ * */
