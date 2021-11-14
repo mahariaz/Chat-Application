@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class Adapter_Home extends RecyclerView.Adapter<Adapter_Home.ViewHolder> {
@@ -27,7 +29,7 @@ public class Adapter_Home extends RecyclerView.Adapter<Adapter_Home.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_Home.ViewHolder holder, int position) {
-        int resource=userList.get(position).getDp();
+        String resource=userList.get(position).getDp();
         String name=userList.get(position).getPerson_name();
         String msg=userList.get(position).getLast_chat();
         String time=userList.get(position).getTime();
@@ -62,8 +64,9 @@ public class Adapter_Home extends RecyclerView.Adapter<Adapter_Home.ViewHolder> 
             last_chat=itemView.findViewById(R.id.last_chat);
         }
 
-        public void setData(int resource, String name, String msg, String times) {
-            dp.setImageResource(resource);
+        public void setData(String resource, String name, String msg, String times) {
+//            dp.setImageResource(resource);
+            Picasso.get().load(resource).into(dp);
             person_name.setText(name);
             last_chat.setText(msg);
             time.setText(times);

@@ -64,7 +64,8 @@ public class home_fragment extends Fragment {
 //                        System.out.println("+" + fname + " " + lname);
 //                        if (!md.getPerson_name().equals(fname + " " + lname)) {
 //                            System.out.println("not there");
-                    userList.add(new ModelClass(R.drawable.nu, fname + " " + lname, "2:45pm", tagline));
+//                    userList.add(new ModelClass(R.drawable.nu, fname + " " + lname, "2:45pm", tagline));
+                    userList.add(new ModelClass(dp, fname + " " + lname, "2:45pm", tagline));
 //                        }
 //
 //                    }

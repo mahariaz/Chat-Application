@@ -34,11 +34,11 @@ public class SendImage extends AppCompatActivity {
         image.setImageBitmap(bmp);
 
         userList=new ArrayList<>();
-        userList.add(new ModelClass(R.drawable.nu,"maha","2:45pm","how are you and I"));
-        userList.add(new ModelClass(R.drawable.nu,"ana","2:45pm","how are you and I"));
-        userList.add(new ModelClass(R.drawable.nu,"ayesha","2:45pm","how are you and I"));
-        userList.add(new ModelClass(R.drawable.nu,"aima","2:45pm","how are you and I"));
-        userList.add(new ModelClass(R.drawable.nu,"shiza","2:45pm","how are you and I"));
+//        userList.add(new ModelClass(R.drawable.nu,"maha","2:45pm","how are you and I"));
+//        userList.add(new ModelClass(R.drawable.nu,"ana","2:45pm","how are you and I"));
+//        userList.add(new ModelClass(R.drawable.nu,"ayesha","2:45pm","how are you and I"));
+//        userList.add(new ModelClass(R.drawable.nu,"aima","2:45pm","how are you and I"));
+//        userList.add(new ModelClass(R.drawable.nu,"shiza","2:45pm","how are you and I"));
         recyclerView= findViewById(R.id.sendImgContactsRV);
         layoutManager=new LinearLayoutManager(SendImage.this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);

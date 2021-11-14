@@ -4,18 +4,18 @@ package com.mahariaz.i181652_180681;
 public class ModelClass {
 
 
-    public ModelClass(int dp, String person_name, String time, String last_chat) {
+    public ModelClass(String dp, String person_name, String time, String last_chat) {
         this.dp = dp;
         this.person_name = person_name;
         this.time = time;
         this.last_chat = last_chat;
     }
 
-    public int getDp() {
+    public String getDp() {
         return dp;
     }
 
-    public void setDp(int dp) {
+    public void setDp(String dp) {
         this.dp = dp;
     }
 
@@ -43,7 +43,7 @@ public class ModelClass {
         this.last_chat = last_chat;
     }
 
-    private int dp;
+    private String dp;
     private String person_name;
     private String time;
     private String last_chat;

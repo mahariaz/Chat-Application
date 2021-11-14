@@ -3,7 +3,7 @@ package com.mahariaz.i181652_180681;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import java.util.UUID;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -101,7 +101,8 @@ public class UserBio extends AppCompatActivity {
     public void register_bio(){
 
         StorageReference storage = FirebaseStorage.getInstance().getReference();
-        storage = storage.child("UserDP/name.jpg");
+        String uniqueID = UUID.randomUUID().toString();
+        storage = storage.child("UserDP/"+uniqueID+".jpg");
         storage.putFile(selectedImage)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override

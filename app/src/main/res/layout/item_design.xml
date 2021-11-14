@@ -4,39 +4,48 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
 
 
-        <ImageView
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imagcard"
+            app:cardCornerRadius="50dp"
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/dp"
-            android:src="@drawable/nu">
+            android:layout_height="50dp">
 
-        </ImageView>
+            <ImageView
+                android:id="@+id/dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/nu">
+
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/person_name"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/dp"
+            android:layout_toRightOf="@+id/imagcard"
             android:text="maha"
             android:textColor="@color/white"
             android:textStyle="bold">
 
         </TextView>
+
         <TextView
             android:id="@+id/time"
-            android:textColor="@color/white"
-            android:text="2:34pm"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="75dp"
             android:layout_toRightOf="@+id/person_name"
-            android:layout_marginLeft="75dp">
+            android:text="2:34pm"
+            android:textColor="@color/white">
 
         </TextView>
         <TextView
@@ -45,7 +54,7 @@
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="how are you hi and"
-            android:layout_toRightOf="@+id/dp"
+            android:layout_toRightOf="@+id/imagcard"
             android:layout_below="@+id/person_name"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp">
