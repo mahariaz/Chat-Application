@@ -4,17 +4,23 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sinch.android.rtc.SinchClient;
+import com.sinch.android.rtc.calling.Call;
+import com.sinch.android.rtc.calling.CallListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,11 +31,60 @@ public class MessageActivity extends AppCompatActivity {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     ArrayList<messageScreenAdapter.MessageModel> messageList;
+
+    FirebaseAuth auth;
+    FirebaseUser firebaseuser;
+    SinchClient sinchClient;
+    Call call;
+    DatabaseReference dbRefForSinch;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+//        Required by sinch
+
+
 //      This line switches the user
         Shared.username = "abubakar2000";
+
+        auth = FirebaseAuth.getInstance();
+        firebaseuser = auth.getCurrentUser();
+        dbRefForSinch = FirebaseDatabase.getInstance().getReference().child("Users");
+/*
+        findViewById(R.id.callButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sinchClient = Sinch.getSinchClientBuilder()
+                        .context(MessageActivity.this)
+                        .userId(firebaseuser.getUid())
+                        .applicationKey("")
+                        .environmentHost("")
+                        .build();
+//                starts listening for calls
+                sinchClient.startListeningOnActiveConnection();
+
+
+                sinchClient.getCallClient().addCallClientListener(new CallClientListener() {
+                    @Override
+                    public void onIncomingCall(CallClient callClient, Call call) {
+//                        executes when call is recieved
+
+
+                    }
+                });
+
+                sinchClient.start();
+
+                fetchUsers();
+            }
+
+
+
+        });
+*/
+
 
         messageList = new ArrayList<>();
         setContentView(R.layout.activity_message);
@@ -118,6 +173,7 @@ public class MessageActivity extends AppCompatActivity {
 //        messageList.add(new messageScreenAdapter.MessageModel("I am great", "", "", true));
 
         sendButton.setOnClickListener(v -> {
+
             // get time
             SimpleDateFormat input = new SimpleDateFormat("HH:mm");
             String time = input.format(new Date());
@@ -151,20 +207,58 @@ public class MessageActivity extends AppCompatActivity {
         findViewById(R.id.backButtonMessageScreen).setOnClickListener(view -> finish());
 
         findViewById(R.id.callButton).setOnClickListener(v -> {
-            //Intent i = new Intent(MessageActivity.this, CallerActivity.class);
-            //startActivity(i);
+//            TODO add the call screen
+//            Intent i = new Intent(MessageActivity.this, CallerActivity.class);
+//            startActivity(i);
         });
 
         messageRecycler.setAdapter(messageAdapterInstance);
     }
 
-    public ArrayList<messageScreenAdapter.MessageModel> messageSorter(ArrayList<messageScreenAdapter.MessageModel> messageList){
+    private void fetchUsers() {
+//        fetch users to see whom to call
+        dbRefForSinch.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    private class SinchCallListener implements CallListener {
+
+        @Override
+        public void onCallProgressing(Call call) {
+            Toast.makeText(MessageActivity.this, "Call is progressing...", Toast.LENGTH_LONG).show();
+
+        }
+
+        @Override
+        public void onCallEstablished(Call call) {
+            Toast.makeText(MessageActivity.this, "Call Connected", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onCallEnded(Call call) {
+            Toast.makeText(MessageActivity.this, "Call Ended", Toast.LENGTH_LONG).show();
+//            hangs up the call
+            call.hangup();
+        }
+    }
+
+    public ArrayList<messageScreenAdapter.MessageModel> messageSorter(ArrayList<messageScreenAdapter.MessageModel> messageList) {
         for (int i = 0; i < messageList.size(); i++) {
             for (int j = i; j < messageList.size(); j++) {
                 if (Long.parseLong(messageList.get(i).sortingParam) > Long.parseLong(messageList.get(j).sortingParam)) {
                     messageScreenAdapter.MessageModel temp = messageList.get(i);
-                    messageList.set(i,messageList.get(j));
-                    messageList.set(j,temp);
+                    messageList.set(i, messageList.get(j));
+                    messageList.set(j, temp);
                 }
             }
         }

@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-firestore:24.0.0'
+    implementation fileTree(dir: 'C:\\Users\\Abubakar\\Downloads\\sinch-android-rtc-4.8.6+b14862c\\sinch-android-rtc-4.8.6+b14862c\\libs', include: ['*.aar', '*.jar'], exclude: [])
     testImplementation 'junit:junit:'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
